@@ -30,6 +30,9 @@ function getItem(item) {
     const removeBtn = newItem.querySelector('.button_remove');
     removeBtn.addEventListener('click', handleDelete);
 
+    const duplicateBtn = newItem.querySelector('.button_duplicate');
+    duplicateBtn.addEventListener('click', (event) => handleDuplicate(event));
+
     return newItem;
 }
 
@@ -45,6 +48,16 @@ function handleDelete(event) {
     const targetEl = event.target;
     const listItem = targetEl.closest('.card');
     listItem.remove();
+}
+
+function handleDuplicate(event) {
+    const targetEl = event.target;
+    const listItem = targetEl.closest('.card');
+    const headerEl = listItem.querySelector('.card__title');
+    const title = headerEl.textContent;
+
+    const newItem = getItem({title});
+    listItem.after(newItem);
 }
 
 addButtonEl.addEventListener('click', handleAdd);
