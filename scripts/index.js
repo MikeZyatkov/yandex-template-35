@@ -12,11 +12,10 @@ const listContainerEl = document.querySelector('.todo__list');
 function render() {
     const html = TODO_LIST
         .map((item, idx, arr) => {
-            return getItemHTML(item);
-        })
-        .join('');
+            return getItem(item);
+        });
 
-    listContainerEl.insertAdjacentHTML('afterbegin', html);
+    listContainerEl.append(...html);
 }
 
 
@@ -29,6 +28,32 @@ function getItemHTML(item) {
                         <button type="button" class="button button_remove"></button>
                     </div>
                 </li>`
+}
+
+function getItem(item) {
+    const cardItem = document.createElement('li');
+    cardItem.classList.add('todo__item', 'card');
+
+    const cardHeader = document.createElement('h2');
+    cardHeader.classList.add('card__title');
+    cardHeader.textContent = item.title;
+
+    const cardActions = document.createElement('div');
+    cardActions.classList.add('card__actions');
+
+    const editButton = document.createElement('button');
+    editButton.classList.add('button', 'button_edit');
+
+    const duplicateButton = document.createElement('button');
+    duplicateButton.classList.add('button', 'button_duplicate');
+
+    const removeButton = document.createElement('button');
+    removeButton.classList.add('button', 'button_remove');
+
+    cardActions.append(editButton, duplicateButton, removeButton);
+    cardItem.append(cardHeader, cardActions);
+
+    return cardItem;
 }
 
 render();
